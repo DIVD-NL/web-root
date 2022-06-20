@@ -1,8 +1,5 @@
-www.divd.nl and csirt.divd.nl websites
+Web root for DIVD
 ====
-a
-This repo holds these websites:
-* www.divd.nl
-* [csirt.divd.nl](https://csirt.divd.nl)
+This repo holds the files that should go into the root htdocs directory at bit.nl.
 
-Each in their own subdirectory
+Make sure you include the files that need to be synced in the `files_to_sync.txt` file.
