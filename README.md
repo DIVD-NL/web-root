@@ -1,8 +1,5 @@
-www.divd.nl and csirt.divd.nl websites
+Web/Root repository
 ====
-a
-This repo holds these websites:
-* www.divd.nl
-* [csirt.divd.nl](https://csirt.divd.nl)
+This repository contains the files that need to go into the root of the Bit.nl webspace for DIVD.
 
-Each in their own subdirectory
+Make sure you include the files to sync in the `rsync-files.txt` file.
