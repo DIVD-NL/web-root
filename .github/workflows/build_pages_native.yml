@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - bye_bye_CircleCI
 
 jobs:
   build_and_test:
@@ -14,7 +13,7 @@ jobs:
         uses: actions/checkout@v3
       - name: rsync deploy
         uses: burnett01/rsync-deployments@5.2.1
-        if:   ${{ github.ref == 'refs/heads/bye_bye_CircleCI' }}
+        if:   ${{ github.ref == 'refs/heads/main' }}
         with:
           switches: -avzr 
           path: deploy
