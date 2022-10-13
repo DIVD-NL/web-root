@@ -1,0 +1,24 @@
+name: build_test_deploy
+run-name: Build, test and deploy website (if needed)
+on: 
+  push:
+    branches:
+      - main
+      - bye_bye_CircleCI
+
+jobs:
+  build_and_test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: rsync deploy
+        uses: burnett01/rsync-deployments@5.2.1
+        if:   ${{ github.ref == 'refs/heads/main' }}
+        with:
+          switches: -avzr --include-from=rsync-files.txt
+          path: .
+          remote_path: htdocs
+          remote_host: ${{ secrets.DEPLOY_HOST }}
+          remote_user: ${{ secrets.DEPLOY_USER }}
+          remote_key: ${{ secrets.DEPLOY_KEY_ROOT }}
