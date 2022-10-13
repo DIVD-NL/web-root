@@ -1,8 +1,5 @@
 RewriteEngine On
 Header always set Strict-Transport-Security "max-age=63072000; includeSubdomains;"
-# Redirect http -> https
-RewriteCond %{HTTP:X-HTTPS-SESSION} !^yes$
-RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
 SetEnvIfNoCase X-HTTPS-Session Yes is_ssl=yes
 SetEnvIfNoCase X-HTTPS-Session Yes is_https=yes
@@ -20,7 +17,7 @@ RewriteRule (.*) divd-nl/$1 [L]
 # Redirect when I summon a directory without a trailing slash
 RewriteCond %{HTTP_HOST} ^www\.divd\.nl [NC]
 RewriteCond %{REQUEST_URI} ^/divd-nl.*[^/]$ [NC]
-RewriteCond %{REQUEST_FILENAME} -d [NC]
+RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule ^divd-nl/(.*) /$1/ [L,r=301]
 
 # Serve csirt from csirt-divd-nl
@@ -31,7 +28,7 @@ RewriteRule (.*) csirt-divd-nl/$1 [L]
 # Redirect when I summon a directory without a trailing slash
 RewriteCond %{HTTP_HOST} ^csirt\.divd\.nl [NC]
 RewriteCond %{REQUEST_URI} ^/csirt-divd-nl.*[^/]$ [NC]
-RewriteCond %{REQUEST_FILENAME} -d [NC]
+RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule ^csirt-divd-nl/(.*) /$1/ [L,r=301]
 
 # recirect divd.club to www
@@ -46,10 +43,10 @@ RewriteRule (.*) divd-club/$1 [L]
 # Redirect when I summon a directory without a trailing slash
 RewriteCond %{HTTP_HOST} ^www\.divd\.club [NC]
 RewriteCond %{REQUEST_URI} ^/divd-club.*[^/]$ [NC]
-RewriteCond %{REQUEST_FILENAME} -d [NC]
+RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule ^divd-club/(.*) /$1/ [L,r=301]
 
-# cyber-wear.nl 
+# cyber-wear.nl
 
 # recirect cyber-wear.nl to www
 RewriteCond %{HTTP_HOST} ^cyber-wear\.nl [NC]
@@ -63,7 +60,7 @@ RewriteRule (.*) cyber-wear-nl/$1 [L]
 # Redirect when I summon a directory without a trailing slash
 RewriteCond %{HTTP_HOST} ^www\.cyber-wear\.nl [NC]
 RewriteCond %{REQUEST_URI} ^/cyber-wear-nl.*[^/]$ [NC]
-RewriteCond %{REQUEST_FILENAME} -d [NC]
+RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule ^cyber-wear-nl/(.*) /$1/ [L,r=301]
 
 # divd.fund
@@ -80,5 +77,9 @@ RewriteRule (.*) divd.fund/$1 [L]
 # Redirect when I summon a directory without a trailing slash
 RewriteCond %{HTTP_HOST} ^www\.divd\.fund [NC]
 RewriteCond %{REQUEST_URI} ^/divd\.fund.*[^/]$ [NC]
-RewriteCond %{REQUEST_FILENAME} -d [NC]
+RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule ^divd.fund/(.*) /$1/ [L,r=301]
+
+# Security.txt rewrite because Jekyll doesn't handle hidden directories
+RewriteCond %{REQUEST_URI} \/.well-known\/security\.txt$ [NC]
+RewriteRule ^.* /security.txt [L]
