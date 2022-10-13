@@ -16,7 +16,9 @@ jobs:
         uses: burnett01/rsync-deployments@5.2.1
         if:   ${{ github.ref == 'refs/heads/bye_bye_CircleCI' }}
         with:
-          switches: -avzr --include-from=rsync-files.txt
+          switches: -avzr 
+          path: 
+            - .htaccess
           remote_path: htdocs
           remote_host: ${{ secrets.DEPLOY_HOST }}
           remote_user: ${{ secrets.DEPLOY_USER }}
