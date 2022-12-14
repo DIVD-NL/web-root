@@ -90,8 +90,8 @@ RewriteRule ^divd.fund/(.*) /$1/ [L,r=301]
 
 # divd.global
 
-# recirect divd.fund to www.divd.nl
+# recirect divd.global to www.divd.nl
 RewriteCond %{HTTP_HOST} divd\.global$ [NC]
-RewriteRule (.*) https://www.divd.nl/$1 [r=301,L]
+RewriteRule (.*) https://www.divd.nl/$1 [Gr=301,L]
 
 
