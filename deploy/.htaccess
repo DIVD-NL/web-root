@@ -9,6 +9,8 @@ SetEnvIfNoCase X-HTTPS-Session Yes is_ssl=yes
 SetEnvIfNoCase X-HTTPS-Session Yes is_https=yes
 SetEnvIfNoCase X-HTTPS-Session Yes HTTPS=on
 
+# www.divd.nl
+
 # recirect divd.nl to www
 RewriteCond %{HTTP_HOST} ^divd\.nl [NC]
 RewriteRule (.*) https://www.divd.nl/$1 [r=301,L]
@@ -23,6 +25,8 @@ RewriteCond %{HTTP_HOST} ^www\.divd\.nl [NC]
 RewriteCond %{REQUEST_URI} ^/divd-nl.*[^/]$ [NC]
 RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule ^divd-nl/(.*) /$1/ [L,r=301]
+
+# csirt.divd.nl
 
 # Serve csirt from csirt-divd-nl
 RewriteCond %{HTTP_HOST} ^csirt\.divd\.nl [NC]
@@ -84,6 +88,10 @@ RewriteCond %{REQUEST_URI} ^/divd\.fund.*[^/]$ [NC]
 RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule ^divd.fund/(.*) /$1/ [L,r=301]
 
-# Security.txt rewrite because Jekyll doesn't handle hidden directories
-RewriteCond %{REQUEST_URI} \/.well-known\/security\.txt$ [NC]
-RewriteRule ^.* /security.txt [L]
+# divd.global
+
+# recirect divd.fund to www.divd.nl
+RewriteCond %{HTTP_HOST} divd\.global$ [NC]
+RewriteRule (.*) https://www.divd.nl/$1 [r=301,L]
+
+
