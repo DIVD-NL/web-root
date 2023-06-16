@@ -88,6 +88,19 @@ RewriteCond %{REQUEST_URI} ^/divd\.fund.*[^/]$ [NC]
 RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule ^divd.fund/(.*) /$1/ [L,r=301]
 
+# beta.divd.nl
+
+# Serve ibeta.divd.nl from beta
+RewriteCond %{HTTP_HOST} ^beta\.divd\.nl [NC]
+RewriteCond %{REQUEST_URI} !^/beta [NC]
+RewriteRule (.*) beta/$1 [L]
+
+# Redirect when I summon a directory without a trailing slash
+RewriteCond %{HTTP_HOST} ^beta\.divd\.nl [NC]
+RewriteCond %{REQUEST_URI} ^/beta.*[^/]$ [NC]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^beta/(.*) /$1/ [L,r=301]
+
 # divd.global
 
 # redirect divd.global to www.divd.nl
