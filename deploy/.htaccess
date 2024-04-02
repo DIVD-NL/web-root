@@ -1,5 +1,9 @@
 RewriteEngine On
 Header always set Strict-Transport-Security "max-age=63072000; includeSubdomains;"
+Header always append X-Frame-Options DENY
+Header set X-Content-Type-Options nosniff
+Header set X-XSS-Protection "1; mode=block"
+Header set Referrer-Policy same-origin
 
 # Redirect http -> https
 RewriteCond %{HTTP:X-HTTPS-SESSION} !^yes$
@@ -15,14 +19,14 @@ SetEnvIfNoCase X-HTTPS-Session Yes HTTPS=on
 RewriteCond %{HTTP_HOST} ^divd\.nl [NC]
 RewriteRule (.*) https://www.divd.nl/$1 [r=301,L]
 
-# Serve www from divd-nl
+# Serve www from divd-nl-2024
 RewriteCond %{HTTP_HOST} ^www\.divd\.nl [NC]
 RewriteCond %{REQUEST_URI} !^/divd-nl [NC]
-RewriteRule (.*) divd-nl/$1 [L]
+RewriteRule (.*) divd-nl-2024/$1 [L]
 
 # Redirect when I summon a directory without a trailing slash
 RewriteCond %{HTTP_HOST} ^www\.divd\.nl [NC]
-RewriteCond %{REQUEST_URI} ^/divd-nl.*[^/]$ [NC]
+RewriteCond %{REQUEST_URI} ^/divd-nl-2024.*[^/]$ [NC]
 RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule ^divd-nl/(.*) /$1/ [L,r=301]
 
@@ -87,6 +91,30 @@ RewriteCond %{HTTP_HOST} ^www\.divd\.fund [NC]
 RewriteCond %{REQUEST_URI} ^/divd\.fund.*[^/]$ [NC]
 RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule ^divd.fund/(.*) /$1/ [L,r=301]
+
+# beta.divd.nl
+
+## Serve beta.divd.nl from beta
+#RewriteCond %{HTTP_HOST} ^beta\.divd\.nl [NC]
+#RewriteCond %{REQUEST_URI} !^/beta [NC]
+#RewriteRule (.*) beta/$1 [L]
+#
+## Redirect when I summon a directory without a trailing slash
+#RewriteCond %{HTTP_HOST} ^beta\.divd\.nl [NC]
+#RewriteCond %{REQUEST_URI} ^/beta.*[^/]$ [NC]
+#RewriteCond %{REQUEST_FILENAME} -d
+#RewriteRule ^beta/(.*) /$1/ [L,r=301]
+
+# Serve beta.divd.nl from divd-nl
+RewriteCond %{HTTP_HOST} ^beta\.divd\.nl [NC]
+RewriteCond %{REQUEST_URI} !^/divd-nl [NC]
+RewriteRule (.*) divd-nl/$1 [L]
+
+# Redirect when I summon a directory without a trailing slash
+RewriteCond %{HTTP_HOST} ^beta\.divd\.nl [NC]
+RewriteCond %{REQUEST_URI} ^/divd-nl.*[^/]$ [NC]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^beta/(.*) /$1/ [L,r=301]
 
 # divd.global
 
