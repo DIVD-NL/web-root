@@ -19,16 +19,27 @@ SetEnvIfNoCase X-HTTPS-Session Yes HTTPS=on
 RewriteCond %{HTTP_HOST} ^divd\.nl [NC]
 RewriteRule (.*) https://www.divd.nl/$1 [r=301,L]
 
-# Serve www from divd-nl-2024
+# Serve www from divd-nl
 RewriteCond %{HTTP_HOST} ^www\.divd\.nl [NC]
 RewriteCond %{REQUEST_URI} !^/divd-nl [NC]
-RewriteRule (.*) divd-nl-2024/$1 [L]
+RewriteRule (.*) divd-nl/$1 [L]
 
 # Redirect when I summon a directory without a trailing slash
 RewriteCond %{HTTP_HOST} ^www\.divd\.nl [NC]
-RewriteCond %{REQUEST_URI} ^/divd-nl-2024.*[^/]$ [NC]
+RewriteCond %{REQUEST_URI} ^/divd-nl.*[^/]$ [NC]
 RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule ^divd-nl/(.*) /$1/ [L,r=301]
+
+## Serve www from divd-nl-2024
+#RewriteCond %{HTTP_HOST} ^www\.divd\.nl [NC]
+#RewriteCond %{REQUEST_URI} !^/divd-nl-2024 [NC]
+#RewriteRule (.*) divd-nl-2024/$1 [L]
+#
+## Redirect when I summon a directory without a trailing slash
+#RewriteCond %{HTTP_HOST} ^www\.divd\.nl [NC]
+#RewriteCond %{REQUEST_URI} ^/divd-nl-2024.*[^/]$ [NC]
+#RewriteCond %{REQUEST_FILENAME} -d
+#RewriteRule ^divd-nl-2024/(.*) /$1/ [L,r=301]
 
 # csirt.divd.nl
 
@@ -47,16 +58,29 @@ RewriteRule ^csirt-divd-nl/(.*) /$1/ [L,r=301]
 RewriteCond %{HTTP_HOST} ^divd\.club [NC]
 RewriteRule (.*) https://www.divd.club/$1 [r=301,L]
 
-# Serve divd.club from divd-club
-RewriteCond %{HTTP_HOST} ^www\.divd\.club [NC]
-RewriteCond %{REQUEST_URI} !^/divd-club [NC]
-RewriteRule (.*) divd-club/$1 [L]
+# beta.divd.nl
+
+# Serve beta.divd.nl from divd-nl-2024
+RewriteCond %{HTTP_HOST} ^beta\.divd\.nl [NC]
+RewriteCond %{REQUEST_URI} !^/divd-nl-2024 [NC]
+RewriteRule (.*) divd-nl-2024/$1 [L]
 
 # Redirect when I summon a directory without a trailing slash
-RewriteCond %{HTTP_HOST} ^www\.divd\.club [NC]
-RewriteCond %{REQUEST_URI} ^/divd-club.*[^/]$ [NC]
+RewriteCond %{HTTP_HOST} ^beta\.divd\.nl [NC]
+RewriteCond %{REQUEST_URI} ^/divd-nl-2024.*[^/]$ [NC]
 RewriteCond %{REQUEST_FILENAME} -d
-RewriteRule ^divd-club/(.*) /$1/ [L,r=301]
+RewriteRule ^divd-nl-2024/(.*) /$1/ [L,r=301]
+
+## Serve beta.divd.nl from divd-nl
+#RewriteCond %{HTTP_HOST} ^beta\.divd\.nl [NC]
+#RewriteCond %{REQUEST_URI} !^/divd-nl [NC]
+#RewriteRule (.*) divd-nl/$1 [L]
+
+## Redirect when I summon a directory without a trailing slash
+#RewriteCond %{HTTP_HOST} ^beta\.divd\.nl [NC]
+#RewriteCond %{REQUEST_URI} ^/divd-nl.*[^/]$ [NC]
+#RewriteCond %{REQUEST_FILENAME} -d
+#RewriteRule ^divd-nl/(.*) /$1/ [L,r=301]
 
 # cyber-wear.nl
 
@@ -75,46 +99,18 @@ RewriteCond %{REQUEST_URI} ^/cyber-wear-nl.*[^/]$ [NC]
 RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule ^cyber-wear-nl/(.*) /$1/ [L,r=301]
 
-# divd.fund
+# divd.club
 
-# recirect divd.fund to www
-RewriteCond %{HTTP_HOST} ^divd\.fund [NC]
-RewriteRule (.*) https://www.divd.fund/$1 [r=301,L]
-
-# Serve divd.fund from divd.fund
-RewriteCond %{HTTP_HOST} ^www\.divd\.fund [NC]
-RewriteCond %{REQUEST_URI} !^/divd.fund [NC]
-RewriteRule (.*) divd.fund/$1 [L]
+# Serve divd.club from divd-club
+RewriteCond %{HTTP_HOST} ^www\.divd\.club [NC]
+RewriteCond %{REQUEST_URI} !^/divd-club [NC]
+RewriteRule (.*) divd-club/$1 [L]
 
 # Redirect when I summon a directory without a trailing slash
-RewriteCond %{HTTP_HOST} ^www\.divd\.fund [NC]
-RewriteCond %{REQUEST_URI} ^/divd\.fund.*[^/]$ [NC]
+RewriteCond %{HTTP_HOST} ^www\.divd\.club [NC]
+RewriteCond %{REQUEST_URI} ^/divd-club.*[^/]$ [NC]
 RewriteCond %{REQUEST_FILENAME} -d
-RewriteRule ^divd.fund/(.*) /$1/ [L,r=301]
-
-# beta.divd.nl
-
-## Serve beta.divd.nl from beta
-#RewriteCond %{HTTP_HOST} ^beta\.divd\.nl [NC]
-#RewriteCond %{REQUEST_URI} !^/beta [NC]
-#RewriteRule (.*) beta/$1 [L]
-#
-## Redirect when I summon a directory without a trailing slash
-#RewriteCond %{HTTP_HOST} ^beta\.divd\.nl [NC]
-#RewriteCond %{REQUEST_URI} ^/beta.*[^/]$ [NC]
-#RewriteCond %{REQUEST_FILENAME} -d
-#RewriteRule ^beta/(.*) /$1/ [L,r=301]
-
-# Serve beta.divd.nl from divd-nl
-RewriteCond %{HTTP_HOST} ^beta\.divd\.nl [NC]
-RewriteCond %{REQUEST_URI} !^/divd-nl [NC]
-RewriteRule (.*) divd-nl/$1 [L]
-
-# Redirect when I summon a directory without a trailing slash
-RewriteCond %{HTTP_HOST} ^beta\.divd\.nl [NC]
-RewriteCond %{REQUEST_URI} ^/divd-nl.*[^/]$ [NC]
-RewriteCond %{REQUEST_FILENAME} -d
-RewriteRule ^beta/(.*) /$1/ [L,r=301]
+RewriteRule ^divd-club/(.*) /$1/ [L,r=301]
 
 # divd.global
 
