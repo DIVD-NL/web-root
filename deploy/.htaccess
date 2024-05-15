@@ -75,9 +75,10 @@ RewriteRule (.*) divd-nl/$1 [L]
 
 # Redirect when I summon a directory without a trailing slash
 RewriteCond %{HTTP_HOST} ^vintage\.divd\.nl [NC]
-RewriteCond %{REQUEST_URI} ^/divd-nl.*[^/]$ [NC]
+RewriteCond %{REQUEST_URI} ^/divd-nl-staging.*[^/]$ [NC]
 RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule ^divd-nl/(.*) /$1/ [L,r=301]
+
 # cyber-wear.nl
 
 # recirect cyber-wear.nl to www
@@ -113,4 +114,4 @@ RewriteRule ^divd-club/(.*) /$1/ [L,r=301]
 # redirect divd.global to www.divd.nl
 RewriteCond %{HTTP_HOST} ^divd.global$ [OR]
 RewriteCond %{HTTP_HOST} ^www.divd.global$
-RewriteRule (.*)$ https://www.divd.nl/$1 [R=301,L]
+RewriteRule (.*)$ https://www.divd.nl/ [R=301,L]
