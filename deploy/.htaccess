@@ -19,17 +19,6 @@ SetEnvIfNoCase X-HTTPS-Session Yes HTTPS=on
 RewriteCond %{HTTP_HOST} ^divd\.nl [NC]
 RewriteRule (.*) https://www.divd.nl/$1 [r=301,L]
 
-## Serve www from divd-nl
-#RewriteCond %{HTTP_HOST} ^www\.divd\.nl [NC]
-#RewriteCond %{REQUEST_URI} !^/divd-nl [NC]
-#RewriteRule (.*) divd-nl/$1 [L]
-#
-## Redirect when I summon a directory without a trailing slash
-#RewriteCond %{HTTP_HOST} ^www\.divd\.nl [NC]
-#RewriteCond %{REQUEST_URI} ^/divd-nl.*[^/]$ [NC]
-#RewriteCond %{REQUEST_FILENAME} -d
-#RewriteRule ^divd-nl/(.*) /$1/ [L,r=301]
-
 # Serve www from divd-nl-2024
 RewriteCond %{HTTP_HOST} ^www\.divd\.nl [NC]
 RewriteCond %{REQUEST_URI} !^/divd-nl-2024 [NC]
@@ -54,30 +43,38 @@ RewriteCond %{REQUEST_URI} ^/csirt-divd-nl.*[^/]$ [NC]
 RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule ^csirt-divd-nl/(.*) /$1/ [L,r=301]
 
-# recirect divd.club to www
+# redirect divd.club to www
 RewriteCond %{HTTP_HOST} ^divd\.club [NC]
 RewriteRule (.*) https://www.divd.club/$1 [r=301,L]
 
 # beta.divd.nl
 
-## Serve beta.divd.nl from divd-nl-2024
-#RewriteCond %{HTTP_HOST} ^beta\.divd\.nl [NC]
-#RewriteCond %{REQUEST_URI} !^/divd-nl-2024 [NC]
-#RewriteRule (.*) divd-nl-2024/$1 [L]
-#
-## Redirect when I summon a directory without a trailing slash
-#RewriteCond %{HTTP_HOST} ^beta\.divd\.nl [NC]
-#RewriteCond %{REQUEST_URI} ^/divd-nl-2024.*[^/]$ [NC]
-#RewriteCond %{REQUEST_FILENAME} -d
-#RewriteRule ^divd-nl-2024/(.*) /$1/ [L,r=301]
-
-# Serve beta.divd.nl from divd-nl
+# redirect beta to staging
 RewriteCond %{HTTP_HOST} ^beta\.divd\.nl [NC]
+RewriteRule (.*) https://staging.divd.nl/$1 [r=301,L]
+
+# staging
+
+# Serve staging.divd.nl from divd-nl-staging
+RewriteCond %{HTTP_HOST} ^staging\.divd\.nl [NC]
+RewriteCond %{REQUEST_URI} !^/divd-nl-staging [NC]
+RewriteRule (.*) divd-nl-staging/$1 [L]
+
+# Redirect when I summon a directory without a trailing slash
+RewriteCond %{HTTP_HOST} ^staging\.divd\.nl [NC]
+RewriteCond %{REQUEST_URI} ^/divd-nl-staging.*[^/]$ [NC]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^divd-nl-staging/(.*) /$1/ [L,r=301]
+
+# vintage.divd.nl
+
+# Serve vintage.divd.nl from divd-nl
+RewriteCond %{HTTP_HOST} ^vintage\.divd\.nl [NC]
 RewriteCond %{REQUEST_URI} !^/divd-nl [NC]
 RewriteRule (.*) divd-nl/$1 [L]
 
 # Redirect when I summon a directory without a trailing slash
-RewriteCond %{HTTP_HOST} ^beta\.divd\.nl [NC]
+RewriteCond %{HTTP_HOST} ^vintage\.divd\.nl [NC]
 RewriteCond %{REQUEST_URI} ^/divd-nl.*[^/]$ [NC]
 RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule ^divd-nl/(.*) /$1/ [L,r=301]
@@ -117,4 +114,4 @@ RewriteRule ^divd-club/(.*) /$1/ [L,r=301]
 # redirect divd.global to www.divd.nl
 RewriteCond %{HTTP_HOST} ^divd.global$ [OR]
 RewriteCond %{HTTP_HOST} ^www.divd.global$
-RewriteRule (.*)$ https://www.divd.nl/$1 [R=301,L]
+RewriteRule (.*)$ https://www.divd.nl/ [R=301,L]
