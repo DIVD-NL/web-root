@@ -1,4 +1,12 @@
+# Allow rewrites
 RewriteEngine On
+
+# Detect https
+SetEnvIfNoCase X-HTTPS-Session Yes is_ssl=yes
+SetEnvIfNoCase X-HTTPS-Session Yes is_https=yes
+SetEnvIfNoCase X-HTTPS-Session Yes HTTPS=on
+
+# Security headers
 Header always set Strict-Transport-Security "max-age=63072000; includeSubdomains;"
 Header always append X-Frame-Options DENY
 Header set X-Content-Type-Options nosniff
@@ -8,10 +16,6 @@ Header set Referrer-Policy same-origin
 # Redirect http -> https
 RewriteCond %{HTTP:X-HTTPS-SESSION} !^yes$
 RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
-
-SetEnvIfNoCase X-HTTPS-Session Yes is_ssl=yes
-SetEnvIfNoCase X-HTTPS-Session Yes is_https=yes
-SetEnvIfNoCase X-HTTPS-Session Yes HTTPS=on
 
 # www.divd.nl
 
@@ -24,12 +28,6 @@ RewriteCond %{HTTP_HOST} ^www\.divd\.nl [NC]
 RewriteCond %{REQUEST_URI} !^/divd-nl-2024 [NC]
 RewriteRule (.*) divd-nl-2024/$1 [L]
 
-# Redirect when I summon a directory without a trailing slash
-RewriteCond %{HTTP_HOST} ^www\.divd\.nl [NC]
-RewriteCond %{REQUEST_URI} ^/divd-nl-2024.*[^/]$ [NC]
-RewriteCond %{REQUEST_FILENAME} -d
-RewriteRule ^divd-nl-2024/(.*) /$1/ [L,r=301]
-
 # csirt.divd.nl
 
 # Serve csirt from csirt-divd-nl
@@ -37,15 +35,8 @@ RewriteCond %{HTTP_HOST} ^csirt\.divd\.nl [NC]
 RewriteCond %{REQUEST_URI} !^/csirt-divd-nl [NC]
 RewriteRule (.*) csirt-divd-nl/$1 [L]
 
-# Redirect when I summon a directory without a trailing slash
-RewriteCond %{HTTP_HOST} ^csirt\.divd\.nl [NC]
-RewriteCond %{REQUEST_URI} ^/csirt-divd-nl.*[^/]$ [NC]
-RewriteCond %{REQUEST_FILENAME} -d
-RewriteRule ^csirt-divd-nl/(.*) /$1/ [L,r=301]
 
-# redirect divd.club to www
-RewriteCond %{HTTP_HOST} ^divd\.club [NC]
-RewriteRule (.*) https://www.divd.club/$1 [r=301,L]
+# staging
 
 # beta.divd.nl
 
@@ -53,18 +44,10 @@ RewriteRule (.*) https://www.divd.club/$1 [r=301,L]
 RewriteCond %{HTTP_HOST} ^beta\.divd\.nl [NC]
 RewriteRule (.*) https://staging.divd.nl/$1 [r=301,L]
 
-# staging
-
 # Serve staging.divd.nl from divd-nl-staging
 RewriteCond %{HTTP_HOST} ^staging\.divd\.nl [NC]
 RewriteCond %{REQUEST_URI} !^/divd-nl-staging [NC]
 RewriteRule (.*) divd-nl-staging/$1 [L]
-
-# Redirect when I summon a directory without a trailing slash
-RewriteCond %{HTTP_HOST} ^staging\.divd\.nl [NC]
-RewriteCond %{REQUEST_URI} ^/divd-nl-staging.*[^/]$ [NC]
-RewriteCond %{REQUEST_FILENAME} -d
-RewriteRule ^divd-nl-staging/(.*) /$1/ [L,r=301]
 
 # vintage.divd.nl
 
@@ -72,12 +55,6 @@ RewriteRule ^divd-nl-staging/(.*) /$1/ [L,r=301]
 RewriteCond %{HTTP_HOST} ^vintage\.divd\.nl [NC]
 RewriteCond %{REQUEST_URI} !^/divd-nl [NC]
 RewriteRule (.*) divd-nl/$1 [L]
-
-# Redirect when I summon a directory without a trailing slash
-RewriteCond %{HTTP_HOST} ^vintage\.divd\.nl [NC]
-RewriteCond %{REQUEST_URI} ^/divd-nl.*[^/]$ [NC]
-RewriteCond %{REQUEST_FILENAME} -d
-RewriteRule ^divd-nl/(.*) /$1/ [L,r=301]
 
 # cyber-wear.nl
 
@@ -90,24 +67,17 @@ RewriteCond %{HTTP_HOST} ^www\.cyber-wear\.nl [NC]
 RewriteCond %{REQUEST_URI} !^/cyber-wear-nl [NC]
 RewriteRule (.*) cyber-wear-nl/$1 [L]
 
-# Redirect when I summon a directory without a trailing slash
-RewriteCond %{HTTP_HOST} ^www\.cyber-wear\.nl [NC]
-RewriteCond %{REQUEST_URI} ^/cyber-wear-nl.*[^/]$ [NC]
-RewriteCond %{REQUEST_FILENAME} -d
-RewriteRule ^cyber-wear-nl/(.*) /$1/ [L,r=301]
-
 # divd.club
+
+# redirect divd.club to www
+RewriteCond %{HTTP_HOST} ^divd\.club [NC]
+RewriteRule (.*) https://www.divd.club/$1 [r=301,L]
 
 # Serve divd.club from divd-club
 RewriteCond %{HTTP_HOST} ^www\.divd\.club [NC]
 RewriteCond %{REQUEST_URI} !^/divd-club [NC]
 RewriteRule (.*) divd-club/$1 [L]
 
-# Redirect when I summon a directory without a trailing slash
-RewriteCond %{HTTP_HOST} ^www\.divd\.club [NC]
-RewriteCond %{REQUEST_URI} ^/divd-club.*[^/]$ [NC]
-RewriteCond %{REQUEST_FILENAME} -d
-RewriteRule ^divd-club/(.*) /$1/ [L,r=301]
 
 # divd.global
 
