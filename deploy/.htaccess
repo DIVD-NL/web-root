@@ -68,16 +68,9 @@ RewriteRule ^divd-nl-staging/(.*) /$1/ [L,r=301]
 
 # vintage.divd.nl
 
-# Serve vintage.divd.nl from divd-nl
+# redirect vintage to www
 RewriteCond %{HTTP_HOST} ^vintage\.divd\.nl [NC]
-RewriteCond %{REQUEST_URI} !^/divd-nl [NC]
-RewriteRule (.*) divd-nl/$1 [L]
-
-# Redirect when I summon a directory without a trailing slash
-RewriteCond %{HTTP_HOST} ^vintage\.divd\.nl [NC]
-RewriteCond %{REQUEST_URI} ^/divd-nl.*[^/]$ [NC]
-RewriteCond %{REQUEST_FILENAME} -d
-RewriteRule ^divd-nl/(.*) /$1/ [L,r=301]
+RewriteRule (.*) https://www.divd.nl/ [r=301,L]
 
 # cyber-wear.nl
 
