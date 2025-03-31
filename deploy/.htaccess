@@ -49,9 +49,16 @@ RewriteRule (.*) https://www.divd.club/$1 [r=301,L]
 
 # beta.divd.nl
 
-# redirect beta to staging
+# Serve beta.divd.nl from beta
 RewriteCond %{HTTP_HOST} ^beta\.divd\.nl [NC]
-RewriteRule (.*) https://staging.divd.nl/$1 [r=301,L]
+RewriteCond %{REQUEST_URI} !^/beta [NC]
+RewriteRule (.*) beta/$1 [L]
+
+# Redirect when I summon a directory without a trailing slash
+RewriteCond %{HTTP_HOST} ^beta\.divd\.nl [NC]
+RewriteCond %{REQUEST_URI} ^/beta.*[^/]$ [NC]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^beta/(.*) /$1/ [L,r=301]
 
 # staging
 
